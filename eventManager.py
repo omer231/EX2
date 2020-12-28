@@ -178,6 +178,7 @@ def printYoungestStudents(in_file_path: str, out_file_path: str, k: int) -> int:
             file_out.write(item["name"] + "\n")
             cnt += 1
             k -= 1
+    file_out.close();
     return cnt
     
 # Calculates the avg age for a given semester
