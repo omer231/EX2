@@ -14,6 +14,8 @@ NAME=1
 AGE=2
 YEAR=3
 SEMESTER=4
+INPUT_IS_NEGATIVE = -1
+NO_STUDENTS_IN_SEMESTER = 0
 
 #recives a string and if the string begins or ends with a space it removes the space
 #str: the string we want to remove spaces from
@@ -128,17 +130,18 @@ def fileCorrect(orig_file_path: str, filtered_file_path: str):
     file.write(str_correct)
     file.close()
 
+## MY HELPER FUNCTIONS ##
 # Using a file with students, the function creates a list containing dictionaries, a dictionary per student, with id, name and age
 #   in_fie_path: The path to the file of students
 def createListWithStudents(in_file_path: str):
     file_in = open(in_file_path, "r")
     students = []
     for line in file_in:
-        id = line.split(',')[0].strip()
-        name = line.split(',')[1].strip()
-        age = line.split(',')[2].strip()
-        year = line.split(',')[3].strip()
-        semester = line.split(',')[4].strip()
+        id = line.split(',')[ID].strip()
+        name = line.split(',')[NAME].strip()
+        age = line.split(',')[AGE].strip()
+        year = line.split(',')[YEAR].strip()
+        semester = line.split(',')[SEMESTER].strip()
         d = {"id":id,"name":name, "age":age, "year":year, "semester":semester}
         students.append(d)
     file_in.close()
@@ -157,15 +160,15 @@ def sortStudentListByAge(students: list):
     students.sort(key=getIdFromList)
     students.sort(key=getAgeFromList)
 
-#@@@@@@@@@@@@@@@@@@@@@@@@
-
+## FUNCTION TO WRITE ##
 # Writes the names of the K youngest students which subscribed 
 # to the event correctly.
 #   in_file_path: The path to the unfiltered subscription file
 #   out_file_path: file path of the output file
 def printYoungestStudents(in_file_path: str, out_file_path: str, k: int) -> int:
     if k < 1:
-        return -1
+        return INPUT_IS_NEGATIVE
+    fileCorrect(in_file_path, in_file_path)
     students = createListWithStudents(in_file_path)
     sortStudentListByAge(students)
     cnt = 0
@@ -182,7 +185,8 @@ def printYoungestStudents(in_file_path: str, out_file_path: str, k: int) -> int:
 #   retuns the avg, else error codes defined.
 def correctAgeAvg(in_file_path: str, semester: int) -> float:
     if semester < 1:
-        return -1
+        return INPUT_IS_NEGATIVE
+    fileCorrect(in_file_path, in_file_path)
     students = createListWithStudents(in_file_path)
     sum = 0
     cnt = 0
@@ -191,13 +195,12 @@ def correctAgeAvg(in_file_path: str, semester: int) -> float:
             sum += int(item["age"])
             cnt += 1
     if cnt == 0:
-        return 0
+        return NO_STUDENTS_IN_SEMESTER
     return sum/cnt
     
 
 #### PART 2 ####
 # Use SWIG :)
-
 ## MY HELPER FUNCTIONS ##
 # Returns the earliest date in the list
 #   events: the list containing events and their dates
