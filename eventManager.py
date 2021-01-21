@@ -134,18 +134,7 @@ def fileCorrect(orig_file_path: str, filtered_file_path: str):
 # Using a file with students, the function creates a list containing dictionaries, a dictionary per student, with id, name and age
 #   in_fie_path: The path to the file of students
 def createListWithStudents(in_file_path: str):
-    file_in = open(in_file_path, "r")
-    students = []
-    for line in file_in:
-        id = line.split(',')[ID].strip()
-        name = line.split(',')[NAME].strip()
-        age = line.split(',')[AGE].strip()
-        year = line.split(',')[YEAR].strip()
-        semester = line.split(',')[SEMESTER].strip()
-        d = {"id":id,"name":name, "age":age, "year":year, "semester":semester}
-        students.append(d)
-    file_in.close()
-    return students
+    return rowsCorrect(in_file_path)
 
 # Returns the "id" key from dictionary of student as int
 def getIdFromList(student):
@@ -168,7 +157,6 @@ def sortStudentListByAge(students: list):
 def printYoungestStudents(in_file_path: str, out_file_path: str, k: int) -> int:
     if k < 1:
         return INPUT_IS_NEGATIVE
-    fileCorrect(in_file_path, in_file_path)
     students = createListWithStudents(in_file_path)
     sortStudentListByAge(students)
     cnt = 0
@@ -178,7 +166,7 @@ def printYoungestStudents(in_file_path: str, out_file_path: str, k: int) -> int:
             file_out.write(item["name"] + "\n")
             cnt += 1
             k -= 1
-    file_out.close();
+    file_out.close()
     return cnt
     
 # Calculates the avg age for a given semester
@@ -187,7 +175,6 @@ def printYoungestStudents(in_file_path: str, out_file_path: str, k: int) -> int:
 def correctAgeAvg(in_file_path: str, semester: int) -> float:
     if semester < 1:
         return INPUT_IS_NEGATIVE
-    fileCorrect(in_file_path, in_file_path)
     students = createListWithStudents(in_file_path)
     sum = 0
     cnt = 0
